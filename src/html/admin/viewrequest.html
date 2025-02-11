@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlockTAR - View Requests</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="../../css/admin.css" />
+  <style>
+    .main-container {
+      flex: 1;
+      width: 90%;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 80px;
+      border-radius: 8px;
+    }
+
+    .record-header {
+        margin: 20px 0;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .search-filter-container {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .search-box {
+        position: relative;
+        flex-grow: 1;
+    }
+
+    .search-input {
+        width: 80%;
+        padding: 10px 15px 10px 40px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .fa-search {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-btn {
+        padding: 10px 20px;
+        background: #f4a261;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s;
+    }
+
+    .dropdown-btn:hover {
+        background: #e76f51;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        z-index: 1;
+        padding: 10px 0;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 10px 15px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f8f9fa;
+    }
+
+    .show {
+        display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f4a261;
+      color: white;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      background: #f4a261;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .action-btn:hover {
+      background: #e76f51;
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="hamburger" onclick="toggleNav()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="header-center">
+            <img src="../../assets/images/tarumt-logo1.png" alt="Logo" />
+        </div>
+        <div class="header-right">
+            <div class="profile-section">
+                <div class="welcome-text">
+                    <div>Welcome</div>
+                    <div class="user-name">Kok Ming Han!</div>
+                </div>
+                <img src="../../assets/images/profile-icon.png" alt="Profile Picture" class="profile-image" />
+            </div>
+        </div>
+    </div>
+  
+    <!-- Side Navigation -->
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+      <a href="adminindex.html">Home</a>
+      <a href="upload.html">Upload Record</a>
+      <a href="register_verifier.html">Verifier Register</a>
+    </div>
+
+    <div class="main-container">
+        <h1>View Request</h1>
+        <div class="record-header">
+            <div class="search-filter-container">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search requests..." class="search-input">
+              </div>
+              <div class="dropdown">
+                <button class="dropdown-btn" onclick="toggleDropdown()">
+                  <i class="fas fa-filter"></i>
+                  Filter
+                </button>
+                <div class="dropdown-content" id="dropdownMenu">
+                  <a href="#">Pending</a>
+                  <a href="#">Approved</a>
+                  <a href="#">Rejected</a>
+                </div>
+              </div>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                <th>No</th>
+                <th>Student ID</th>
+                <th>View Profile</th>
+                <th>View Credential</th>
+                <th>View Issue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-status="pending">
+                    <td>1</td>
+                    <td>2213577</td>
+                    <td><a href="#" class="action-btn" style="background: #f4a261">View Profile</a></td>
+                    <td><a href="#" class="action-btn" style="background: #f4a261">View Credential</a></td>
+                    <td><a href="#" class="action-btn revoke-btn">Revoke</a></td>
+                </tr> 
+            </tbody>
+        </table>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Academic Transcript Verification System</p>
+    </div>
+</body>
+<script>
+    function toggleNav() {
+        const sidenav = document.getElementById("mySidenav");
+        if (sidenav.style.width === "250px") {
+            sidenav.style.width = "0";
+        } else {
+            sidenav.style.width = "250px";
+        }
+    }
+
+    function toggleDropdown() {
+        document.getElementById("dropdownMenu").classList.toggle("show");
+    }
+
+    // Close dropdown if clicked outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-btn') && !event.target.closest('.dropdown')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-input");
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        const filterOptions = dropdownMenu.querySelectorAll("a");
+        const tableRows = document.querySelectorAll("tbody tr");
+
+        // Search filter
+        searchInput.addEventListener("input", function () {
+            const searchText = searchInput.value.toLowerCase();
+            tableRows.forEach(row => {
+                const studentId = row.cells[1].textContent.toLowerCase();
+                if (studentId.includes(searchText)) {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+
+        // Filter dropdown
+        filterOptions.forEach(option => {
+            option.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent page reload
+                const filterText = option.textContent.toLowerCase();
+                tableRows.forEach(row => {
+                    const status = row.getAttribute("data-status").toLowerCase(); // Assuming each row has a 'data-status' attribute
+                    if (status === filterText || filterText === "all") {
+                        row.style.display = "table-row";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+</html>

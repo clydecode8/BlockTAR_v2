@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockTAR - Academic Verification System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <style>
+        
+
+        /* Main Content */
+        .main-container {
+            flex: 1;
+            width: 90%;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .image-section {
+            width: 100%;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .login-section {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-header h1 {
+            color: #f4a261;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header h2 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem 0.7rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+            background: none;
+        }
+
+        .form-group input:focus {
+            border-color: #f4a261;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 50%;
+            left: 0.7rem;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: #718096;
+            pointer-events: none;
+            transition: 0.3s ease all;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 0.8rem;
+            color: #f4a261;
+            background: white;
+            padding: 0 5px;
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #f4a261;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #e67e22;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .login-footer a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #f4a261;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+
+        @media (min-width: 768px) {
+            
+            .content-wrapper {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="hamburger" onclick="toggleNav()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <img src="../../assets/images/tarumt-logo1.png" alt="TARUMT Logo">
+    </div>
+
+    <!-- Side Navigation -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="../userpanel.html">User Panel</a>
+        <a href="login_verifier.html">Verifier Login</a>
+    </div>
+
+    <div class="main-container">
+        <div class="content-wrapper">
+            <div class="image-section">
+                <img src="../../assets/images/business-situation-concept-idea.jpg" alt="Verification Process">
+            </div>
+            
+            <div class="login-section">
+                <div class="login-header">
+                    <h1>BlockTAR</h1>
+                    <h2>Verifier</h2>
+                    <p>Please fill in the details.</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="text" id="email" placeholder=" " required>
+                        <label for="email">Login</label>
+                    </div>
+
+                    <div class="form-group password-input-container">
+                        <input type="password" id="password" placeholder=" " required>
+                        <label for="password">Password</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="confirm-password" id="confirm-password" placeholder=" " required>
+                        <label for="confirm-password">Confirm Password</label>
+                    </div>
+
+                    <button type="submit" class="login-button">REGISTER</button>
+
+                    <div class="login-footer">
+                        <p>Have an account? <a href="login_verifier.html">Login here.</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Academic Transcript Verification System</p>
+    </div>
+
+    <script>
+        function toggleNav() {
+            const sidenav = document.getElementById("mySidenav");
+            if (sidenav.style.width === "250px") {
+                sidenav.style.width = "0";
+            } else {
+                sidenav.style.width = "250px";
+            }
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePasswordIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            console.log('Login attempted with:', email, password);
+        });
+
+        // Close sidenav when clicking outside
+        window.addEventListener('click', function(event) {
+            const sidenav = document.getElementById('mySidenav');
+            if (!event.target.matches('.hamburger') && !event.target.closest('.sidenav')) {
+                if (sidenav.style.width === '250px') {
+                    sidenav.style.width = '0';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+acapy:
+  image: bcgovimages/aries-cloudagent:py3.12_1.0.1  # Replace with the version you downloaded
+  container_name: acapy
+  ports:
+    - "8020:8020"  # ACA-Py admin API port
+    - "8021:8021"  # ACA-Py endpoint port
+  environment:
+    - ACAPY_WALLET_TYPE=indy
+    - ACAPY_GENESIS_FILE=/home/indy/genesis.txn
+    - ACAPY_WALLET_KEY=your_wallet_key
+    - ACAPY_ENDPOINT=http://localhost:8021
+    - ACAPY_ADMIN_ENDPOINT=http://0.0.0.0:8020
+    - ACAPY_WALLET_NAME=your_wallet_name
+    - ACAPY_INBOUND_TRANSPORTS=http
+    - ACAPY_OUTBOUND_TRANSPORTS=http
+    - ACAPY_SEED=your_wallet_seed
+    
+  volumes:
+    - ./data/genesis.txn:/home/indy/genesis.txn

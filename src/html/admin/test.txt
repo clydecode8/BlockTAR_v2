@@ -1,0 +1,114 @@
+FUNCTION registerUser(username, password, role):
+    hashedPassword = hash(password) // Hash the user's password for security
+    IF role NOT IN ["Student", "Admin", "Verifier"]:
+        RETURN "Invalid role"
+    ENDIF
+    userID = generateUniqueID() // Create a unique user ID
+    STORE userID, username, hashedPassword, role IN Database
+    RETURN "Registration Successful"
+END FUNCTION
+
+
+FUNCTION loginUser(username, password):
+    user = FETCH user FROM MongoDB WHERE username = username
+    IF user IS NULL:
+        RETURN "User not found"
+    ENDIF
+    hashedPassword = hash(password)
+    IF hashedPassword != user.password:
+        RETURN "Invalid password"
+    ENDIF
+    token = generateAuthToken(user.userID, user.role) // Generate token from MongoDB
+    RETURN token
+END FUNCTION
+
+FUNCTION authenticateWithMetaMask(walletAddress, signature):
+    expectedMessage = "Login request for " + walletAddress
+    IF NOT verifySignature(walletAddress, signature, expectedMessage):
+        RETURN "Authentication Failed"
+    ENDIF
+    user = FETCH user FROM Database WHERE walletAddress = walletAddress
+    IF user IS NULL:
+        RETURN "User not registered"
+    ENDIF
+    token = generateAuthToken(user.userID, user.role)
+    RETURN token
+END FUNCTION
+
+START
+
+1. CHECK if Ethereum interface (MetaMask) is available:
+   IF NOT available:
+      DISPLAY "Ethereum interface not found. Please install MetaMask."
+      TERMINATE process.
+
+2. INITIALIZE Web3:
+   CONNECT to Ethereum provider.
+   REQUEST user accounts.
+   LOAD smart contract using ABI and contract address.
+   VERIFY if contract initialized:
+      IF initialization fails:
+         DISPLAY "Contract initialization failed."
+         TERMINATE process.
+
+3. FETCH user wallet address:
+   GET first account from MetaMask.
+   CALL contract method isRegistered(walletAddress).
+   IF NOT registered:
+      DISPLAY "User not registered. Redirecting to connect wallet page."
+      REDIRECT to connect wallet page.
+      TERMINATE process.
+
+END
+
+Algorithm GenerateAndStoreDID
+Input: studentID, transcriptData
+Output: DID, transactionHash
+
+1. Connect to blockchain using smart contract instance
+2. Generate a new DID using a DID library (e.g., `did:ethr`)
+   DID = GenerateDID(studentID)
+3. Upload transcriptData to IPFS
+   ipfsHash = UploadToIPFS(transcriptData)
+4. Call smart contract function to store DID and IPFS hash
+   transactionHash = SmartContract.storeDID(studentID, DID, ipfsHash)
+5. Return DID, transactionHash
+
+Algorithm GenerateQRCode
+Input: DID
+Output: QRCode
+
+1. Import QR code generation library
+2. Generate a QR code using the DID as input
+   QRCode = GenerateQR(DID)
+3. Return QRCode
+
+
+Algorithm RetrieveTranscript
+Input: DID
+Output: transcriptData
+
+1. Connect to blockchain using smart contract instance
+2. Query the smart contract for the IPFS hash linked to the DID
+   ipfsHash = SmartContract.getIPFSHash(DID)
+3. Fetch transcript data from IPFS using ipfsHash
+   transcriptData = FetchFromIPFS(ipfsHash)
+4. Return transcriptData
+
+Algorithm RevokeTranscript
+Input: DID, adminAddress
+Output: revocationStatus
+
+1. Connect to blockchain using admin credentials
+2. Call smart contract function to mark DID as revoked
+   revocationStatus = SmartContract.revokeDID(DID, adminAddress)
+3. Return revocationStatus
+
+Algorithm DIDToQRCodeConsistency
+Input: DID
+Output: QRCode
+
+1. Fetch DID from smart contract using studentID
+2. Call GenerateQRCode(DID) on both web and mobile apps
+3. Ensure QRCode output matches across both platforms
+4. If mismatch occurs, log error and notify admin

@@ -1,0 +1,125 @@
+/* styles.css */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fdf2e6;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    width: 100%;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: #f4a261;
+    color: white;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.header img {
+    margin-top: 10px;
+    width: 200px;
+    height: auto;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    margin-top: 15px;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    border-radius: 2px;
+}
+
+/* Side Navigation */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+
+.sidenav a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    transition: 0.2s;
+}
+
+.sidenav a:hover {
+    background-color: #f4a261;
+    color: white;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f4a261;
+    color: white;
+    font-size: 0.9rem;
+}
+
+/* Media Queries */
+@media (min-width: 500px) {
+    .hamburger {
+        left: 20px;
+    }
+}
+
+@media (min-width: 800px) {
+    .hamburger {
+        left: 50px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hamburger {
+        left: 100px;
+    }
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: 10px 20px;
+    }
+}

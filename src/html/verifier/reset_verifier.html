@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockTAR - Password Reset</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <style>
+        .main-container {
+            flex: 1;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .back-button {
+            background-color: #f4a261;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .form-section {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h1 {
+            color: #f4a261;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-header h2 {
+            color: #4a5568;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            background-color: #f7f7f7;
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #f4a261;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .reset-button:hover {
+            background-color: #e67e22;
+        }
+
+        .info-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            max-width: 400px;
+        }
+
+        .info-section h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-section p {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .video-container {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            border-radius: 4px;
+            aspect-ratio: 16/9;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .info-section {
+                max-width: 100%;
+            }
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem 0.7rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+            background: none;
+        }
+
+        .form-group input:focus {
+            border-color: #f4a261;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 50%;
+            left: 0.7rem;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: #718096;
+            pointer-events: none;
+            transition: 0.3s ease all;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 0.8rem;
+            color: #f4a261;
+            background: white;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="hamburger" onclick="toggleNav()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <img src="../../assets/images/tarumt-logo1.png" alt="BlockTAR Logo">
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="../userpanel.html">User Panel</a>
+        <a href="register_verifier.html">Verifier Register</a>
+    </div>
+
+    <div class="main-container">
+        <button class="back-button">&lt;</button>
+        
+        <div class="content-wrapper">
+            <div class="form-section">
+                <div class="form-header">
+                    <h1>BlockTAR</h1>
+                    <h2>Please fill in the details.</h2>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <input type="text" id="email" placeholder=" " required>
+                        <label for="email">Input your email.</label>
+                    </div>
+
+                    <button type="submit" class="reset-button">RESET</button>
+                </form>
+            </div>
+
+            <div class="info-section">
+                <h3>Please remember your password.</h3>
+                <p>Watch this video on how to remember your passwords!</p>
+                <div class="video-container">
+                    <iframe src="../../assets/videos/password.mp4" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Academic Transcript Verification System</p>
+    </div>
+
+    <script>
+        function toggleNav() {
+            const sidenav = document.getElementById("mySidenav");
+            if (sidenav.style.width === "250px") {
+                sidenav.style.width = "0";
+            } else {
+                sidenav.style.width = "250px";
+            }
+        }
+
+        // Close sidenav when clicking outside
+        window.addEventListener('click', function(event) {
+            const sidenav = document.getElementById('mySidenav');
+            if (!event.target.matches('.hamburger') && !event.target.closest('.sidenav')) {
+                if (sidenav.style.width === '250px') {
+                    sidenav.style.width = '0';
+                }
+            }
+        });
+
+        const btn = document.querySelector('.back-button');
+        btn.addEventListener('click', () => {
+            window.location.href = 'login_verifier.html'
+        })
+    </script>
+</body>
+</html>

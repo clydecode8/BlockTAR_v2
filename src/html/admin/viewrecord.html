@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlockTAR - Academic Verification System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="../../css/admin.css" />
+  <style>
+    .main-container {
+      flex: 1;
+      width: 90%;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 80px;
+      border-radius: 8px;
+    }
+
+    .record-header {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+  }
+
+  .search-filter-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .search-box {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .search-input {
+    width: 80%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  .fa-search {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+  }
+
+  .filter-btn {
+    padding: 10px 20px;
+    background: #f4a261;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+  }
+
+  .filter-btn:hover {
+    background: #e76f51;
+  }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f4a261;
+      color: white;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .revoke-btn {
+      background: #dc3545;
+    }
+
+    .revoke-btn:hover {
+      background: #bb2d3b;
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+      <div class="header-left">
+          <div class="hamburger" onclick="toggleNav()">
+              <div></div>
+              <div></div>
+              <div></div>
+          </div>
+      </div>
+      <div class="header-center">
+          <img src="../../assets/images/tarumt-logo1.png" alt="Logo" />
+      </div>
+      <div class="header-right">
+          <div class="profile-section">
+              <div class="welcome-text">
+                  <div>Welcome</div>
+                  <div class="user-name">Kok Ming Han!</div>
+              </div>
+              <img src="../../assets/images/profile-icon.png" alt="Profile Picture" class="profile-image" onclick="openProfile()" />
+            </div>
+      </div>
+  </div>
+
+  <!-- Side Navigation -->
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+    <a href="adminindex.html">Home</a>
+    <a href="upload.html">Upload Record</a>
+    <a href="register_verifier.html">Verifier Register</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <h1>View Record</h1>
+    <div class="record-header">
+      <div class="search-filter-container">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search by Student ID or Name..." class="search-input">
+        </div>
+        <div class="filter-section">
+          <button class="filter-btn">
+            <i class="fas fa-filter"></i>
+            Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Student ID</th>
+          <th>View Profile</th>
+          <th>View Credential</th>
+          <th>Revoke?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-status="pending">
+          <td>1</td>
+          <td>2213577</td>
+          <td><a href="#" class="action-btn" style="background: #f4a261">View Profile</a></td>
+          <td><a href="#" class="action-btn" style="background: #f4a261">View Credential</a></td>
+          <td><a href="#" class="action-btn revoke-btn">Revoke</a></td>
+      </tr>      
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 Academic Transcript Verification System</p>
+  </div>
+
+  <script>
+
+    function openProfile() {
+        alert("Profile Clicked! Redirecting to profile page...");
+        window.location.href = "profile.html"; // Change this to the actual profile page
+    }
+
+    function toggleNav() {
+        const sidenav = document.getElementById("mySidenav");
+        if (sidenav.style.width === "250px") {
+            sidenav.style.width = "0";
+        } else {
+            sidenav.style.width = "250px";
+        }
+    }
+
+    // Close sidenav when clicking outside
+    window.addEventListener('click', function(event) {
+        const sidenav = document.getElementById('mySidenav');
+        if (!event.target.matches('.hamburger') && !event.target.closest('.sidenav')) {
+            if (sidenav.style.width === '250px') {
+                sidenav.style.width = '0';
+            }
+        }
+    });
+
+    // Search functionality
+    document.querySelector('.search-input').addEventListener('input', function () {
+        let filterValue = this.value.trim().toLowerCase();
+        let rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            let studentID = row.children[1].textContent.toLowerCase();
+            row.style.display = studentID.includes(filterValue) ? '' : 'none';
+        });
+    });
+
+    // Filter dropdown functionality
+    document.querySelector('.filter-btn').addEventListener('click', function () {
+        let statusFilter = prompt("Enter status to filter (e.g., pending, approved, revoked):").trim().toLowerCase();
+        let rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            let status = row.getAttribute('data-status') || '';
+            row.style.display = status.includes(statusFilter) || statusFilter === '' ? '' : 'none';
+        });
+    });
+  </script>
+
+</body>
+</html>

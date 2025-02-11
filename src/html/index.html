@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decentralised Academic Transcript System</title>
+  <style>
+    /* General Styles */
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fdf2e6; /* Lightest Orange */
+      box-sizing: border-box;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+  
+    /* Header */
+    .header {
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f4a261;
+      color: white;
+      box-sizing: border-box;
+    }
+  
+    .header img {
+      width: 250px;
+      padding-top: 5px;
+      height: auto;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center; /* Aligns the text and arrow */
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn::before {
+      content: '>>'; /* Add arrow symbol */
+      position: absolute;
+      left: -15px; /* Position the arrow to the left of the text */
+      font-size: 1.5rem; /* Adjust the arrow size */
+      color: #333; /* Color of the arrow */
+      opacity: 0; /* Initially invisible */
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* Hover state with arrow and background change */
+    .btn:hover::before {
+      left: 10px; /* Move the arrow to the right when hovered */
+      opacity: 1; /* Make the arrow visible */
+    }
+  
+    .header .btn {
+      padding: 16px 45px;
+      background-color: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 4px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-right: 50px;
+      font-weight: bold;
+    }
+  
+    .header .btn:hover {
+  background-color: whitesmoke; /* Light Orange */
+  color: #333;
+  font-weight: bold;
+  transform: scale(1.05); /* Slight scale effect */
+}
+  
+    /* Main Container */
+    .main-container {
+      width: 100%;
+      max-width: 95%;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Space between sections */
+      min-height: 80vh; /* Ensure content doesn't overlap footer */
+    }
+  
+    /* Section Styling */
+    .section {
+      width: 100%;
+      padding: 60px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+  
+    /* First Section */
+    .first-section {
+      background-color: white; /* White background */
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      flex-wrap: wrap; /* Allow elements to wrap on small screens */
+    }
+  
+    .animation-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 45%; /* Adjust width for responsiveness */
+    }
+  
+    .text-container {
+      width: 45%; /* Adjust width for responsiveness */
+      padding: 20px;
+    }
+  
+    .blockchain-container {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+    }
+  
+    /* Larger Cubes (90px) */
+    .cube {
+      position: relative;
+      width: 90px; /* Increased size */
+      height: 90px; /* Increased size */
+      transform-style: preserve-3d;
+      transform: rotateX(-20deg) rotateY(30deg);
+      animation: rotate 6s infinite linear;
+    }
+  
+    .cube-face {
+      position: absolute;
+      width: 90px; /* Match cube size */
+      height: 90px; /* Match cube size */
+      background-color: #2cb1c4; /* Cyan */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+  
+    .cube-face.front  { transform: translateZ(45px); } /* Adjusted for larger cubes */
+    .cube-face.back   { transform: rotateY(180deg) translateZ(45px); }
+    .cube-face.left   { transform: rotateY(-90deg) translateZ(45px); }
+    .cube-face.right  { transform: rotateY(90deg) translateZ(45px); }
+    .cube-face.top    { transform: rotateX(90deg) translateZ(45px); }
+    .cube-face.bottom { transform: rotateX(-90deg) translateZ(45px); }
+  
+    /* Larger Chains */
+    .chain {
+      width: 90px; /* Adjusted to match cube size */
+      height: 10px; /* Slightly increased height */
+      background-color: black;
+      border-radius: 4px;
+      position: relative;
+      animation: pulse 1.5s infinite ease-in-out;
+      margin-top: 25px; /* Adjusted spacing */
+    }
+  
+    @keyframes pulse {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(1.3); }
+    }
+  
+    /* Animation for each word */
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-30px); /* Start from left */
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0); /* End in its original position */
+      }
+    }
+  
+    .text-container h2 {
+      font-size: 2rem;
+      color: #333;
+      display: flex;
+      gap: 5px; /* Space between words */
+    }
+  
+    .text-container .word {
+      opacity: 0; /* Initially hide the words */
+      animation: slideIn 1s ease-out forwards; /* Apply the animation */
+    }
+  
+    .text-container .word:nth-child(1) {
+      animation-delay: 0s;
+    }
+  
+    .text-container .word:nth-child(2) {
+      animation-delay: 0.3s; /* Delay second word */
+    }
+  
+    .text-container .word:nth-child(3) {
+      animation-delay: 0.6s; /* Delay third word */
+    }
+  
+    .text-container .word:nth-child(4) {
+      animation-delay: 0.9s; /* Delay fourth word */
+    }
+  
+    @keyframes rotate {
+      0% { transform: rotateX(-20deg) rotateY(30deg); }
+      100% { transform: rotateX(-20deg) rotateY(390deg); }
+    }
+  
+    .text-below {
+      margin-top: 10px;
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+    }
+  
+    .text-container h1 {
+      font-size: 2.5rem;
+      color: #f4a261;
+    }
+
+  
+  
+    /* Second Section */
+/* Second Section */
+.second-section {
+  background-color: #f7c198; /* Light Orange */
+  color: #a5502d; /* Darkest Orange */
+  display: flex; /* Use flexbox for vertical split */
+  justify-content: space-between; /* Space out text and image */
+  align-items: center; /* Center vertically */
+  padding: 40px 20px; /* Adjust padding for proper spacing */
+  margin-bottom: 100px;
+}
+
+.second-section .text-container {
+  width: 50%; /* Left side for text */
+  text-align: center; /* Align text to the center */
+  
+}
+
+.second-section .image-container {
+  width: 50%; /* Right side for image */
+  display: flex;
+  justify-content: center; /* Center the image */
+}
+
+.second-section .image-container img {
+  width: 70%; /* Make the image smaller */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.second-section h2 {
+  font-size: 2.5rem; /* Larger text */
+  color: #333;
+  margin-bottom: 50px; /* Space between text and button */
+  display: block;
+}
+
+.second-section .btn {
+  padding: 16px 45px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.second-section .btn:hover {
+  background-color: whitesmoke; /* Light Orange */
+  color: #333;
+  font-weight: bold;
+  transform: scale(1.05); /* Slight scale effect */
+}
+
+
+  
+    /* Footer */
+    .footer {
+      width: 100%;
+      background-color: #f4a261;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      box-sizing: border-box;
+    }
+  
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .first-section {
+        flex-direction: column;
+        padding: 30px 10px;
+      }
+  
+      .animation-container,
+      .text-container {
+        width: 100%;
+      }
+    
+      .text-container h1 {
+        font-size: 2.5rem;
+      }
+  
+      .text-container h2 {
+        font-size: 1.2rem;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      .header {
+        flex-direction: column;
+        align-items: center;
+      }
+  
+      .header img {
+        width: 120px;
+      }
+  
+      .footer {
+        font-size: 0.8rem;
+      }
+  
+      .first-section {
+        padding: 20px 10px;
+      }
+  
+      .text-container h1 {
+        font-size: 1.5rem;
+      }
+  
+      .text-container h2 {
+        font-size: 1rem;
+      }
+    }
+
+    /* Button Styling */
+.understand-more-btn {
+  padding: 16px 45px;  /* Matching header button's padding */
+  background-color: #f4a261;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  margin-top: 20px;  /* Optional spacing above the button */
+}
+
+.understand-more-btn:hover {
+  background-color: #e08e44; /* Darker Orange */
+  color: #333;
+  font-weight: bold;
+  transform: scale(1.05); /* Add slight scaling on hover */
+}
+
+  </style>
+  
+</head>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/673ac0224304e3196ae4423b/1icunt29g';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+<body>
+  
+
+  <!-- Header Section -->
+  <div class="header">
+    <img src="../assets/images/tarumt-logo1.png" alt="Logo">
+    <button class="btn">Login / Register</button>
+  </div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- First Section -->
+    <div class="section first-section">
+      <!-- Left side with animation -->
+      <div class="animation-container">
+        <div class="blockchain-container">
+          <!-- First Cube -->
+          <div class="cube">
+            <div class="cube-face front"></div>
+            <div class="cube-face back"></div>
+            <div class="cube-face left"></div>
+            <div class="cube-face right"></div>
+            <div class="cube-face top"></div>
+            <div class="cube-face bottom"></div>
+          </div>
+          <div class="chain"></div>
+          
+          <!-- Second Cube -->
+          <div class="cube">
+            <div class="cube-face front"></div>
+            <div class="cube-face back"></div>
+            <div class="cube-face left"></div>
+            <div class="cube-face right"></div>
+            <div class="cube-face top"></div>
+            <div class="cube-face bottom"></div>
+          </div>
+          <div class="chain"></div>
+
+          <!-- Third Cube -->
+          <div class="cube">
+            <div class="cube-face front"></div>
+            <div class="cube-face back"></div>
+            <div class="cube-face left"></div>
+            <div class="cube-face right"></div>
+            <div class="cube-face top"></div>
+            <div class="cube-face bottom"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side with text -->
+      <div class="text-container">
+        <h1>
+          <span class="word">BlockTAR</span></h1>
+        <h2>
+          <span class="word">Made</span>
+          <span class="word">using</span>
+          <span class="word">blockchain</span>
+          <span class="word">technology.</span>
+        </h2>
+        <button class="btn understand-more-btn">Learn More</button>
+      </div>
+    </div>
+
+    <!-- Second Section -->
+<div class="section second-section">
+  <!-- Left side with text -->
+  <div class="text-container">
+    <h2>Are you an employer?</h2>
+    <button class="btn">Verify here</button>
+  </div>
+  
+  <!-- Right side with image -->
+  <div class="image-container">
+    <img src="../assets/images/business-situation-concept-idea.jpg" alt="Employer Verification Image">
+  </div>
+</div>
+
+
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 Academic Transcript Verification System</p>
+  </div>
+
+</body>
+</html>

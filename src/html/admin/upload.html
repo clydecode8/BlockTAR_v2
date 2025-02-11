@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlockTAR - Academic Verification System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="../../css/admin.css" />
+  <style>
+    .main-container {
+      flex: 1;
+      width: 90%;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 80px;
+      border-radius: 8px;
+    }
+
+    .upload-container {
+      text-align: center;
+      padding: 40px;
+      border: 3px dashed #f4a261;
+      border-radius: 10px;
+      margin: 20px 0;
+      transition: all 0.3s ease;
+    }
+
+    .upload-container.dragover {
+      background-color: #fdf2e6;
+      border-color: #e76f51;
+    }
+
+    .upload-button {
+      padding: 15px 30px;
+      background-color: #f4a261;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .upload-button:hover {
+      background-color: #e76f51;
+    }
+
+    .form-container {
+      margin-top: 30px;
+    }
+
+    .file-form {
+      background-color: #fdf2e6;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.9rem 0.7rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.3s ease;
+      background: none;
+    }
+
+    .form-group input:focus {
+      border-color: #f4a261;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 50%;
+      left: 0.7rem;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: #718096;
+      pointer-events: none;
+      transition: 0.3s ease all;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      font-size: 0.8rem;
+      color: #f4a261;
+      background: white;
+      padding: 0 5px;
+    }
+
+    /* Selection Controls */
+    .form-controls {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .form-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: #f4a261;
+      margin-right: 10px;
+    }
+    
+
+    /* Global Animated Delete Button Styles */
+    #globalDeleteContainer {
+        margin-bottom: 20px;
+
+    }
+
+    .delete-btn {
+      display: inline-block;
+      position: relative;
+      width: 250px;      
+      height: 32px;
+      transition: width 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000),
+                  height 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000),
+                  transform 0.8s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+      transform-style: preserve-3d;
+      transform-origin: 50% 50%;
+      cursor: pointer;
+    }
+
+    
+
+    .delete-btn-front {
+      position: relative;
+      width: 150px;
+      height: 100%;
+      background-color: #e76f51;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      font-size: 14px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      transform: translateZ(1px); /* Add this line */
+      margin-top: auto;
+
+    }
+
+    .delete-btn-back {
+        position: absolute;
+        width: 250px;
+        height: 150px;
+        background-color: #fff;
+        transform: rotateX(-180deg) translateZ(1px); /* Modified this line */
+        padding: 8px;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        backface-visibility: hidden; /* Add this line */
+
+    }
+
+    .delete-btn-back p {
+      margin: 0;
+      font-size: 12px;
+      color: #333;
+      text-align: center;
+    }
+
+    .delete-btn-back button {
+      padding: 4px;
+      border: none;
+      border-radius: 3px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .delete-btn-back .yes {
+      background-color: #2196F3;
+      color: white;
+      
+    }
+
+    .delete-btn-back .yes:hover {
+      background-color: #1976D2;
+    }
+
+    .delete-btn-back .no {
+      background-color: #eee;
+      color: #666;
+    }
+
+    .delete-btn-back .no:hover {
+      background-color: #ddd;
+    }
+
+    .delete-btn.is-open {
+      width: 120px;
+      height: 80px;
+    }
+
+    .btn[data-direction="left"] .btn-back,
+    .btn[data-direction="right"] .btn-back {
+    transform: translateZ(-2px) rotateY(180deg);
+    }
+
+    /* Update the rotation for different directions */
+    .delete-btn[data-direction="top"].is-open {
+    transform: rotateX(180deg);
+    }
+
+    .delete-btn[data-direction="right"].is-open {
+    transform: rotateY(180deg);
+    }
+
+    .delete-btn[data-direction="bottom"].is-open {
+    transform: rotateX(-180deg);
+    }
+
+    .delete-btn[data-direction="left"].is-open {
+    transform: rotateY(-180deg);
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+      <div class="header-left">
+          <div class="hamburger" onclick="toggleNav()">
+              <div></div>
+              <div></div>
+              <div></div>
+          </div>
+      </div>
+      <div class="header-center">
+          <img src="../../assets/images/tarumt-logo1.png" alt="Logo" />
+      </div>
+      <div class="header-right">
+          <div class="profile-section">
+              <div class="welcome-text">
+                  <div>Welcome</div>
+                  <div class="user-name">Kok Ming Han!</div>
+              </div>
+              <img src="../../assets/images/profile-icon.png" alt="Profile Picture" class="profile-image" />
+          </div>
+      </div>
+  </div>
+
+  <!-- Side Navigation -->
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+    <a href="adminindex.html">Home</a>
+    <a href="upload.html">Upload Record</a>
+    <a href="register_verifier.html">Verifier Register</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <h1>Upload Records</h1>
+    <div class="upload-container" id="dropZone">
+      <h2>Drag & Drop Files Here</h2>
+      <p>or</p>
+      <input type="file" id="fileInput" multiple style="display: none" />
+      <button class="upload-button" onclick="document.getElementById('fileInput').click()">
+        Choose Files
+      </button>
+    </div>
+    <div class="form-container">
+      <!-- Global Delete Button (Animated Confirmation) -->
+      <div id="globalDeleteContainer">
+        <div class="delete-btn" id="globalDeleteBtn">
+          <div class="delete-btn-back">
+            <p>Are you sure you want to delete the selected records?</p>
+            <button class="yes">Yes</button>
+            <button class="no">No</button>
+          </div>
+          <div class="delete-btn-front">Delete</div>
+        </div>
+      </div>
+      <!-- Forms Will Be Added Here -->
+      <div id="formContainer"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 Academic Transcript Verification System</p>
+  </div>
+
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const formContainer = document.getElementById('formContainer');
+    const globalDeleteBtn = document.getElementById('globalDeleteBtn');
+    const globalDeleteBtnFront = globalDeleteBtn.querySelector('.delete-btn-front');
+    const globalBtnYes = globalDeleteBtn.querySelector('.yes');
+    const globalBtnNo = globalDeleteBtn.querySelector('.no');
+
+    function distance(x1, y1, x2, y2) {
+      const dx = x1 - x2;
+      const dy = y1 - y2;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, preventDefaults, false);
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // Highlight drop zone when dragging files
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+    });
+
+    // Handle dropped files and file selection
+    dropZone.addEventListener('drop', handleDrop, false);
+    fileInput.addEventListener('change', handleFiles, false);
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      handleFiles({ target: { files: files } });
+    }
+
+  function handleFiles(e) {
+    // Get files from both input and drop events
+    const files = e.dataTransfer ? 
+      Array.from(e.dataTransfer.files) : 
+      Array.from(e.target.files);
+
+    files.forEach(createFormForFile);
+
+    // Clear file input value if files came from input
+    if (e.target === fileInput) {
+      fileInput.value = null;
+    }
+  }
+
+    function createFormForFile(file) {
+      const formHtml = `
+        <div class="file-form">
+          <div class="form-controls">
+            <input type="checkbox" class="form-checkbox">
+          </div>
+          <h3>${file.name}</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <input type="text" name="name" placeholder=" " required>
+              <label>Name</label>
+            </div>
+            <div class="form-group">
+              <input type="text" name="campus" placeholder=" " required>
+              <label>Campus</label>
+            </div>
+            <div class="form-group">
+              <input type="number" step="0.01" name="cgpa" placeholder=" " required>
+              <label>CGPA</label>
+            </div>
+            <div class="form-group">
+              <input type="text" name="faculty" placeholder=" " required>
+              <label>Faculty</label>
+            </div>
+            <div class="form-group">
+              <input type="text" name="achievement" placeholder=" " required>
+              <label>Achievement</label>
+            </div>
+            <div class="form-group">
+              <input type="text" name="programme" placeholder=" " required>
+              <label>Programme</label>
+            </div>
+            <div class="form-group">
+              <input type="text" name="graduatedIn" placeholder=" " required>
+              <label>Graduated in</label>
+            </div>
+          </div>
+        </div>
+      `;
+      formContainer.insertAdjacentHTML('beforeend', formHtml);
+    }
+
+    // Global delete button behavior using the animated confirmation
+    globalDeleteBtnFront.addEventListener('click', function (event) {
+      const rect = globalDeleteBtn.getBoundingClientRect();
+      const mx = event.clientX - rect.left;
+      const my = event.clientY - rect.top;
+      const directions = [
+        { id: 'top', x: rect.width / 2, y: 0 },
+        { id: 'right', x: rect.width, y: rect.height / 2 },
+        { id: 'bottom', x: rect.width / 2, y: rect.height },
+        { id: 'left', x: 0, y: rect.height / 2 }
+      ];
+      directions.sort((a, b) => distance(mx, my, a.x, a.y) - distance(mx, my, b.x, b.y));
+      globalDeleteBtn.setAttribute('data-direction', directions[0].id);
+      globalDeleteBtn.classList.add('is-open');
+    });
+
+    globalBtnYes.addEventListener('click', function () {
+      const checkboxes = document.querySelectorAll('.form-checkbox:checked');
+      checkboxes.forEach(checkbox => {
+        checkbox.closest('.file-form').remove();
+      });
+      globalDeleteBtn.classList.remove('is-open');
+    });
+
+    globalBtnNo.addEventListener('click', function () {
+      globalDeleteBtn.classList.remove('is-open');
+    });
+
+    function toggleNav() {
+        const sidenav = document.getElementById("mySidenav");
+        if (sidenav.style.width === "250px") {
+            sidenav.style.width = "0";
+        } else {
+            sidenav.style.width = "250px";
+        }
+    }
+
+    // Close sidenav when clicking outside
+    window.addEventListener('click', function(event) {
+        const sidenav = document.getElementById('mySidenav');
+        if (!event.target.matches('.hamburger') && !event.target.closest('.sidenav')) {
+            if (sidenav.style.width === '250px') {
+                sidenav.style.width = '0';
+            }
+        }
+    });
+  </script>
+</body>
+</html>
